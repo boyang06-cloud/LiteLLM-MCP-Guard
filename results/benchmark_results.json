@@ -1,0 +1,552 @@
+{
+  "litellm_version": "1.83.6",
+  "mcp_sdk_version": "1.26.0",
+  "timestamp": "2026-11-26 18:18:01",
+  "modes": {
+    "baseline_open": {
+      "security_cases": [
+        {
+          "id": "T01",
+          "category": "Direct Shell Injection",
+          "name": "bash -c marker probe",
+          "http_status": 200,
+          "blocked": false,
+          "latency_ms": 39.05,
+          "response_snippet": "{\"status\":\"error\",\"error\":true,\"message\":\"Failed to connect to MCP server. Check proxy logs for details.\"}"
+        },
+        {
+          "id": "T02",
+          "category": "Direct Shell Injection",
+          "name": "/bin/sh -c marker probe",
+          "http_status": 200,
+          "blocked": false,
+          "latency_ms": 18.16,
+          "response_snippet": "{\"status\":\"error\",\"error\":true,\"message\":\"Failed to connect to MCP server. Check proxy logs for details.\"}"
+        },
+        {
+          "id": "T03",
+          "category": "Interpreter Bypass",
+          "name": "python3 -c inline execution",
+          "http_status": 200,
+          "blocked": false,
+          "latency_ms": 26.39,
+          "response_snippet": "{\"status\":\"error\",\"error\":true,\"message\":\"Failed to connect to MCP server. Check proxy logs for details.\"}"
+        },
+        {
+          "id": "T04",
+          "category": "Interpreter Bypass",
+          "name": "python compact -c flag",
+          "http_status": 200,
+          "blocked": false,
+          "latency_ms": 36.26,
+          "response_snippet": "{\"status\":\"error\",\"error\":true,\"message\":\"Failed to connect to MCP server. Check proxy logs for details.\"}"
+        },
+        {
+          "id": "T05",
+          "category": "Interpreter Bypass",
+          "name": "python3 -m timeit module exec",
+          "http_status": 200,
+          "blocked": false,
+          "latency_ms": 41.22,
+          "response_snippet": "{\"status\":\"error\",\"error\":true,\"message\":\"Failed to connect to MCP server. Check proxy logs for details.\"}"
+        },
+        {
+          "id": "T06",
+          "category": "Path/Basename Spoofing",
+          "name": "Fake /tmp/python basename",
+          "http_status": 200,
+          "blocked": false,
+          "latency_ms": 14.29,
+          "response_snippet": "{\"status\":\"error\",\"error\":true,\"message\":\"Failed to connect to MCP server. Check proxy logs for details.\"}"
+        },
+        {
+          "id": "T07",
+          "category": "Path/Basename Spoofing",
+          "name": "Path traversal to untrusted script",
+          "http_status": 200,
+          "blocked": false,
+          "latency_ms": 27.84,
+          "response_snippet": "{\"status\":\"error\",\"error\":true,\"message\":\"Failed to connect to MCP server. Check proxy logs for details.\"}"
+        },
+        {
+          "id": "T08",
+          "category": "Env Injection",
+          "name": "PYTHONPATH injection",
+          "http_status": 200,
+          "blocked": false,
+          "latency_ms": 26.31,
+          "response_snippet": "{\"status\":\"ok\"}"
+        },
+        {
+          "id": "T09",
+          "category": "Env Injection",
+          "name": "LD_PRELOAD injection",
+          "http_status": 200,
+          "blocked": false,
+          "latency_ms": 31.27,
+          "response_snippet": "{\"status\":\"ok\"}"
+        },
+        {
+          "id": "T10",
+          "category": "Env Injection",
+          "name": "NODE_OPTIONS injection",
+          "http_status": 200,
+          "blocked": false,
+          "latency_ms": 25.12,
+          "response_snippet": "{\"status\":\"ok\"}"
+        },
+        {
+          "id": "T11",
+          "category": "Control-Plane Integrity",
+          "name": "Untrusted Host header",
+          "http_status": 200,
+          "blocked": false,
+          "latency_ms": 24.15,
+          "response_snippet": "{\"status\":\"ok\"}"
+        },
+        {
+          "id": "T12",
+          "category": "Control-Plane Integrity",
+          "name": "Invalid API Key (Unauth)",
+          "http_status": 400,
+          "blocked": true,
+          "latency_ms": 7.39,
+          "response_snippet": "{\"error\":{\"message\":\"No connected db.\",\"type\":\"no_db_connection\",\"param\":null,\"code\":\"400\"}}"
+        }
+      ],
+      "security_blocked_count": 1,
+      "security_total_count": 12,
+      "security_block_rate_pct": 8.33,
+      "sandbox_isolation": {
+        "http_status": 200,
+        "raw_description": "uid=0,gid=0,config_readable=True,flag_readable=True,master_env=False",
+        "non_root_uid": false,
+        "uid": 0,
+        "config_isolated": false,
+        "flag_isolated": false,
+        "master_env_isolated": true,
+        "latency_ms": 27.88
+      },
+      "functionality_cases": [
+        {
+          "id": "F01",
+          "name": "Echo MCP connection",
+          "passed": true,
+          "http_status": 200,
+          "latency_ms": 24.08
+        },
+        {
+          "id": "F02",
+          "name": "Echo MCP tools/list",
+          "passed": true,
+          "http_status": 200,
+          "latency_ms": 24.38
+        },
+        {
+          "id": "F03",
+          "name": "Status MCP tools/list",
+          "passed": true,
+          "http_status": 200,
+          "latency_ms": 34.74
+        },
+        {
+          "id": "F04",
+          "name": "Benign custom env passthrough",
+          "passed": true,
+          "http_status": 200,
+          "latency_ms": 23.81
+        }
+      ],
+      "functionality_pass_count": 4,
+      "functionality_total_count": 4,
+      "functionality_pass_rate_pct": 100.0,
+      "latency": {
+        "connection": {
+          "n": 30,
+          "mean_ms": 29.0,
+          "median_ms": 25.6,
+          "p95_ms": 35.77,
+          "min_ms": 23.86,
+          "max_ms": 37.4,
+          "std_ms": 5.04
+        },
+        "tools_list": {
+          "n": 30,
+          "mean_ms": 28.95,
+          "median_ms": 25.97,
+          "p95_ms": 36.02,
+          "min_ms": 24.3,
+          "max_ms": 36.04,
+          "std_ms": 4.66
+        },
+        "fast_reject_403": {}
+      }
+    },
+    "baseline_default": {
+      "security_cases": [
+        {
+          "id": "T01",
+          "category": "Direct Shell Injection",
+          "name": "bash -c marker probe",
+          "http_status": 422,
+          "blocked": true,
+          "latency_ms": 8.38,
+          "response_snippet": "{\"detail\":[{\"type\":\"value_error\",\"loc\":[\"body\"],\"msg\":\"Value error, Command 'bash' is not in the allowed commands list for stdio transport. Allowed commands: ['"
+        },
+        {
+          "id": "T02",
+          "category": "Direct Shell Injection",
+          "name": "/bin/sh -c marker probe",
+          "http_status": 422,
+          "blocked": true,
+          "latency_ms": 14.69,
+          "response_snippet": "{\"detail\":[{\"type\":\"value_error\",\"loc\":[\"body\"],\"msg\":\"Value error, Command '/bin/sh' is not in the allowed commands list for stdio transport. Allowed commands:"
+        },
+        {
+          "id": "T03",
+          "category": "Interpreter Bypass",
+          "name": "python3 -c inline execution",
+          "http_status": 200,
+          "blocked": false,
+          "latency_ms": 29.83,
+          "response_snippet": "{\"status\":\"error\",\"error\":true,\"message\":\"Failed to connect to MCP server. Check proxy logs for details.\"}"
+        },
+        {
+          "id": "T04",
+          "category": "Interpreter Bypass",
+          "name": "python compact -c flag",
+          "http_status": 200,
+          "blocked": false,
+          "latency_ms": 38.72,
+          "response_snippet": "{\"status\":\"error\",\"error\":true,\"message\":\"Failed to connect to MCP server. Check proxy logs for details.\"}"
+        },
+        {
+          "id": "T05",
+          "category": "Interpreter Bypass",
+          "name": "python3 -m timeit module exec",
+          "http_status": 200,
+          "blocked": false,
+          "latency_ms": 30.03,
+          "response_snippet": "{\"status\":\"error\",\"error\":true,\"message\":\"Failed to connect to MCP server. Check proxy logs for details.\"}"
+        },
+        {
+          "id": "T06",
+          "category": "Path/Basename Spoofing",
+          "name": "Fake /tmp/python basename",
+          "http_status": 200,
+          "blocked": false,
+          "latency_ms": 26.9,
+          "response_snippet": "{\"status\":\"error\",\"error\":true,\"message\":\"Failed to connect to MCP server. Check proxy logs for details.\"}"
+        },
+        {
+          "id": "T07",
+          "category": "Path/Basename Spoofing",
+          "name": "Path traversal to untrusted script",
+          "http_status": 200,
+          "blocked": false,
+          "latency_ms": 27.25,
+          "response_snippet": "{\"status\":\"error\",\"error\":true,\"message\":\"Failed to connect to MCP server. Check proxy logs for details.\"}"
+        },
+        {
+          "id": "T08",
+          "category": "Env Injection",
+          "name": "PYTHONPATH injection",
+          "http_status": 200,
+          "blocked": false,
+          "latency_ms": 26.35,
+          "response_snippet": "{\"status\":\"ok\"}"
+        },
+        {
+          "id": "T09",
+          "category": "Env Injection",
+          "name": "LD_PRELOAD injection",
+          "http_status": 200,
+          "blocked": false,
+          "latency_ms": 24.63,
+          "response_snippet": "{\"status\":\"ok\"}"
+        },
+        {
+          "id": "T10",
+          "category": "Env Injection",
+          "name": "NODE_OPTIONS injection",
+          "http_status": 200,
+          "blocked": false,
+          "latency_ms": 36.54,
+          "response_snippet": "{\"status\":\"ok\"}"
+        },
+        {
+          "id": "T11",
+          "category": "Control-Plane Integrity",
+          "name": "Untrusted Host header",
+          "http_status": 200,
+          "blocked": false,
+          "latency_ms": 25.31,
+          "response_snippet": "{\"status\":\"ok\"}"
+        },
+        {
+          "id": "T12",
+          "category": "Control-Plane Integrity",
+          "name": "Invalid API Key (Unauth)",
+          "http_status": 400,
+          "blocked": true,
+          "latency_ms": 5.38,
+          "response_snippet": "{\"error\":{\"message\":\"No connected db.\",\"type\":\"no_db_connection\",\"param\":null,\"code\":\"400\"}}"
+        }
+      ],
+      "security_blocked_count": 3,
+      "security_total_count": 12,
+      "security_block_rate_pct": 25.0,
+      "sandbox_isolation": {
+        "http_status": 200,
+        "raw_description": "uid=0,gid=0,config_readable=True,flag_readable=True,master_env=False",
+        "non_root_uid": false,
+        "uid": 0,
+        "config_isolated": false,
+        "flag_isolated": false,
+        "master_env_isolated": true,
+        "latency_ms": 35.03
+      },
+      "functionality_cases": [
+        {
+          "id": "F01",
+          "name": "Echo MCP connection",
+          "passed": true,
+          "http_status": 200,
+          "latency_ms": 24.82
+        },
+        {
+          "id": "F02",
+          "name": "Echo MCP tools/list",
+          "passed": true,
+          "http_status": 200,
+          "latency_ms": 26.04
+        },
+        {
+          "id": "F03",
+          "name": "Status MCP tools/list",
+          "passed": true,
+          "http_status": 200,
+          "latency_ms": 25.77
+        },
+        {
+          "id": "F04",
+          "name": "Benign custom env passthrough",
+          "passed": true,
+          "http_status": 200,
+          "latency_ms": 25.25
+        }
+      ],
+      "functionality_pass_count": 4,
+      "functionality_total_count": 4,
+      "functionality_pass_rate_pct": 100.0,
+      "latency": {
+        "connection": {
+          "n": 30,
+          "mean_ms": 28.55,
+          "median_ms": 26.09,
+          "p95_ms": 36.37,
+          "min_ms": 24.7,
+          "max_ms": 37.88,
+          "std_ms": 4.58
+        },
+        "tools_list": {
+          "n": 30,
+          "mean_ms": 30.73,
+          "median_ms": 27.84,
+          "p95_ms": 37.32,
+          "min_ms": 25.13,
+          "max_ms": 39.62,
+          "std_ms": 5.06
+        },
+        "fast_reject_403": {}
+      }
+    },
+    "mcp_guard": {
+      "security_cases": [
+        {
+          "id": "T01",
+          "category": "Direct Shell Injection",
+          "name": "bash -c marker probe",
+          "http_status": 403,
+          "blocked": true,
+          "latency_ms": 13.41,
+          "response_snippet": "{\"status\":\"blocked\",\"mcp_guard_blocked\":true,\"code\":\"E_UNTRUSTED_CMD\",\"error\":\"Command 'bash' is blocked by MCP-Guard (only registered interpreter entrypoints a"
+        },
+        {
+          "id": "T02",
+          "category": "Direct Shell Injection",
+          "name": "/bin/sh -c marker probe",
+          "http_status": 403,
+          "blocked": true,
+          "latency_ms": 13.24,
+          "response_snippet": "{\"status\":\"blocked\",\"mcp_guard_blocked\":true,\"code\":\"E_UNTRUSTED_CMD\",\"error\":\"Command '/bin/sh' is blocked by MCP-Guard (only registered interpreter entrypoint"
+        },
+        {
+          "id": "T03",
+          "category": "Interpreter Bypass",
+          "name": "python3 -c inline execution",
+          "http_status": 403,
+          "blocked": true,
+          "latency_ms": 2.88,
+          "response_snippet": "{\"status\":\"blocked\",\"mcp_guard_blocked\":true,\"code\":\"E_DISALLOWED_FLAG\",\"error\":\"Interpreter flag '-c' is forbidden by MCP-Guard.\"}"
+        },
+        {
+          "id": "T04",
+          "category": "Interpreter Bypass",
+          "name": "python compact -c flag",
+          "http_status": 403,
+          "blocked": true,
+          "latency_ms": 13.3,
+          "response_snippet": "{\"status\":\"blocked\",\"mcp_guard_blocked\":true,\"code\":\"E_DISALLOWED_FLAG\",\"error\":\"Compact interpreter flag '-cimport pathlib;pathlib.Path('/tmp/probe_t04').write"
+        },
+        {
+          "id": "T05",
+          "category": "Interpreter Bypass",
+          "name": "python3 -m timeit module exec",
+          "http_status": 403,
+          "blocked": true,
+          "latency_ms": 2.97,
+          "response_snippet": "{\"status\":\"blocked\",\"mcp_guard_blocked\":true,\"code\":\"E_DISALLOWED_FLAG\",\"error\":\"Interpreter flag '-m' is forbidden by MCP-Guard.\"}"
+        },
+        {
+          "id": "T06",
+          "category": "Path/Basename Spoofing",
+          "name": "Fake /tmp/python basename",
+          "http_status": 403,
+          "blocked": true,
+          "latency_ms": 13.15,
+          "response_snippet": "{\"status\":\"blocked\",\"mcp_guard_blocked\":true,\"code\":\"E_UNTRUSTED_BIN_PATH\",\"error\":\"Resolved binary path '/tmp/python' is outside trusted system directories.\"}"
+        },
+        {
+          "id": "T07",
+          "category": "Path/Basename Spoofing",
+          "name": "Path traversal to untrusted script",
+          "http_status": 403,
+          "blocked": true,
+          "latency_ms": 2.81,
+          "response_snippet": "{\"status\":\"blocked\",\"mcp_guard_blocked\":true,\"code\":\"E_UNTRUSTED_SCRIPT\",\"error\":\"Script '/app/defense/trusted_mcp_servers/../../../tmp/untrusted_probe.py' reso"
+        },
+        {
+          "id": "T08",
+          "category": "Env Injection",
+          "name": "PYTHONPATH injection",
+          "http_status": 403,
+          "blocked": true,
+          "latency_ms": 2.88,
+          "response_snippet": "{\"status\":\"blocked\",\"mcp_guard_blocked\":true,\"code\":\"E_DANGEROUS_ENV\",\"error\":\"Environment variable 'PYTHONPATH' is blocked by MCP-Guard.\"}"
+        },
+        {
+          "id": "T09",
+          "category": "Env Injection",
+          "name": "LD_PRELOAD injection",
+          "http_status": 403,
+          "blocked": true,
+          "latency_ms": 4.47,
+          "response_snippet": "{\"status\":\"blocked\",\"mcp_guard_blocked\":true,\"code\":\"E_DANGEROUS_ENV\",\"error\":\"Environment variable 'LD_PRELOAD' is blocked by MCP-Guard.\"}"
+        },
+        {
+          "id": "T10",
+          "category": "Env Injection",
+          "name": "NODE_OPTIONS injection",
+          "http_status": 403,
+          "blocked": true,
+          "latency_ms": 2.19,
+          "response_snippet": "{\"status\":\"blocked\",\"mcp_guard_blocked\":true,\"code\":\"E_DANGEROUS_ENV\",\"error\":\"Environment variable 'NODE_OPTIONS' is blocked by MCP-Guard.\"}"
+        },
+        {
+          "id": "T11",
+          "category": "Control-Plane Integrity",
+          "name": "Untrusted Host header",
+          "http_status": 403,
+          "blocked": true,
+          "latency_ms": 1.9,
+          "response_snippet": "{\"status\":\"blocked\",\"mcp_guard_blocked\":true,\"code\":\"E_UNTRUSTED_HOST\",\"error\":\"Host header 'untrusted.example.com' is not in MCP-Guard allowed hosts.\"}"
+        },
+        {
+          "id": "T12",
+          "category": "Control-Plane Integrity",
+          "name": "Invalid API Key (Unauth)",
+          "http_status": 400,
+          "blocked": true,
+          "latency_ms": 6.76,
+          "response_snippet": "{\"error\":{\"message\":\"No connected db.\",\"type\":\"no_db_connection\",\"param\":null,\"code\":\"400\"}}"
+        }
+      ],
+      "security_blocked_count": 12,
+      "security_total_count": 12,
+      "security_block_rate_pct": 100.0,
+      "sandbox_isolation": {
+        "http_status": 200,
+        "raw_description": "uid=65534,gid=65534,config_readable=False,flag_readable=False,master_env=False",
+        "non_root_uid": true,
+        "uid": 65534,
+        "config_isolated": true,
+        "flag_isolated": true,
+        "master_env_isolated": true,
+        "latency_ms": 41.81
+      },
+      "functionality_cases": [
+        {
+          "id": "F01",
+          "name": "Echo MCP connection",
+          "passed": true,
+          "http_status": 200,
+          "latency_ms": 35.3
+        },
+        {
+          "id": "F02",
+          "name": "Echo MCP tools/list",
+          "passed": true,
+          "http_status": 200,
+          "latency_ms": 47.34
+        },
+        {
+          "id": "F03",
+          "name": "Status MCP tools/list",
+          "passed": true,
+          "http_status": 200,
+          "latency_ms": 35.77
+        },
+        {
+          "id": "F04",
+          "name": "Benign custom env passthrough",
+          "passed": true,
+          "http_status": 200,
+          "latency_ms": 45.67
+        }
+      ],
+      "functionality_pass_count": 4,
+      "functionality_total_count": 4,
+      "functionality_pass_rate_pct": 100.0,
+      "latency": {
+        "connection": {
+          "n": 30,
+          "mean_ms": 38.22,
+          "median_ms": 36.29,
+          "p95_ms": 47.2,
+          "min_ms": 35.09,
+          "max_ms": 48.88,
+          "std_ms": 4.27
+        },
+        "tools_list": {
+          "n": 30,
+          "mean_ms": 39.21,
+          "median_ms": 36.91,
+          "p95_ms": 47.42,
+          "min_ms": 35.48,
+          "max_ms": 47.54,
+          "std_ms": 4.29
+        },
+        "fast_reject_403": {
+          "n": 30,
+          "mean_ms": 3.2,
+          "median_ms": 2.14,
+          "p95_ms": 12.2,
+          "min_ms": 1.64,
+          "max_ms": 12.83,
+          "std_ms": 3.13
+        }
+      }
+    }
+  }
+}

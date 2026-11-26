@@ -1,0 +1,11 @@
+services:
+  victim:
+    build:
+      context: ./victim
+
+    container_name: litellm-victim
+
+    ports:
+      - "4000:4000"
+
+    restart: unless-stopped

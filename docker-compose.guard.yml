@@ -1,0 +1,13 @@
+services:
+  litellm-guarded:
+    build:
+      context: .
+      dockerfile: defense/Dockerfile.guard
+    image: litellm-mcp-guard:latest
+    container_name: litellm-mcp-guard
+    environment:
+      - MCP_GUARD_MODE=${MCP_GUARD_MODE:-mcp_guard}
+      - MCP_GUARD_ENABLE=1
+    ports:
+      - "4000:4000"
+    restart: unless-stopped

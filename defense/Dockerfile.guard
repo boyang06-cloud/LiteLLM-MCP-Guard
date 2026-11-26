@@ -1,0 +1,28 @@
+# Reproducible hardened image layered on LiteLLM Proxy 1.83.6
+# For standalone build from scratch, replace FROM with:
+#   FROM python:3.11-slim
+#   WORKDIR /app
+#   RUN pip install --no-cache-dir "litellm[proxy]==1.83.6"
+FROM litellm-cve-demo-victim:latest
+
+WORKDIR /app
+
+# Copy defense framework and registered benign MCP servers
+COPY defense /app/defense
+
+# Harden file permissions: sensitive files readable only by root (0600);
+# trusted MCP scripts readable/executable by sandbox user (nobody), not writable.
+RUN chmod 600 /flag.txt /app/config.yaml && \
+    chmod 755 /app/defense /app/defense/trusted_mcp_servers && \
+    chmod 644 /app/defense/trusted_mcp_servers/*.py && \
+    chmod 755 /app/defense/sandbox_exec.py /app/defense/run_guarded_proxy.py && \
+    mkdir -p /tmp/mcp_sandbox_cwd && chmod 555 /tmp/mcp_sandbox_cwd
+
+ENV MCP_GUARD_MODE=mcp_guard
+ENV MCP_GUARD_ENABLE=1
+ENV PYTHONPATH=/app/defense
+ENV LITELLM_MASTER_KEY=sk-demo
+
+EXPOSE 4000
+
+ENTRYPOINT ["python3", "/app/defense/run_guarded_proxy.py", "--config", "/app/config.yaml", "--host", "0.0.0.0", "--port", "4000"]

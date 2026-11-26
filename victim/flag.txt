@@ -1,0 +1,2 @@
+360{CVE-2026-42271_Command_Injection}
+You succeed to make it!
